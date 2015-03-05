@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:skosx="http://semantix.ucc.ie/ont/201410/skosx#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://semantix.ucc.ie/ont/201410/skosx">
+  <owl:Ontology rdf:about="">
+    <rdfs:comment xml:lang="en">A SKOS extension that defines additional object properties for SKOS Collections.</rdfs:comment>
+    <owl:imports rdf:resource="http://www.w3.org/2004/02/skos/core"/>
+  </owl:Ontology>
+  <owl:Class rdf:ID="Collection"/>
+  <owl:Class rdf:ID="Concept"/>
+  <owl:ObjectProperty rdf:about="http://www.w3.org/2004/02/skos/core#memberOf">
+    <rdfs:subPropertyOf>
+      <owl:TransitiveProperty rdf:about="http://www.w3.org/2004/02/skos/core#memberOfTransitive"/>
+    </rdfs:subPropertyOf>
+    <owl:inverseOf>
+      <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#member">
+        <rdfs:subPropertyOf>
+          <owl:TransitiveProperty rdf:about="http://www.w3.org/2004/02/skos/core#memberTransitive"/>
+        </rdfs:subPropertyOf>
+        <owl:inverseOf rdf:resource="http://www.w3.org/2004/02/skos/core#memberOf"/>
+      </rdf:Description>
+    </owl:inverseOf>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Concept"/>
+          <owl:Class rdf:about="#Collection"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:label xml:lang="en">member of</rdfs:label>
+    <skos:definition xml:lang="en">Relates a member (concept or collection) to a collection it belongs to</skos:definition>
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Collection"/>
+    <rdfs:isDefinedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >http://semantix.ucc.ie/ont/201410/skosx</rdfs:isDefinedBy>
+  </owl:ObjectProperty>
+  <owl:TransitiveProperty rdf:about="http://www.w3.org/2004/02/skos/core#memberOfTransitive">
+    <rdfs:label xml:lang="en">member of transitive</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Collection"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Concept"/>
+          <owl:Class rdf:about="#Collection"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:isDefinedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >http://semantix.ucc.ie/ont/201410/skosx</rdfs:isDefinedBy>
+    <skos:definition xml:lang="en">Relates a concept or collection to a collection it (directly or indirectly) belongs to.</skos:definition>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+    <owl:inverseOf>
+      <owl:TransitiveProperty rdf:about="http://www.w3.org/2004/02/skos/core#memberTransitive"/>
+    </owl:inverseOf>
+  </owl:TransitiveProperty>
+  <owl:TransitiveProperty rdf:about="http://www.w3.org/2004/02/skos/core#memberTransitive">
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Collection"/>
+    <rdfs:label xml:lang="en">has member transitive</rdfs:label>
+    <rdfs:isDefinedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >http://semantix.ucc.ie/ont/201410/skosx</rdfs:isDefinedBy>
+    <owl:inverseOf rdf:resource="http://www.w3.org/2004/02/skos/core#memberOfTransitive"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <skos:definition xml:lang="en">Relates a collection to one of its direct or indirect (transitive) members.</skos:definition>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Concept"/>
+          <owl:Class rdf:about="#Collection"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+  </owl:TransitiveProperty>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.4, Build 579)  http://protege.stanford.edu -->
