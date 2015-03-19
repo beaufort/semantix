@@ -24,7 +24,7 @@ package ie.cmrc.smtx.sws.request;
  */
 public enum RequestParam {
     
-    outputFormat,
+    acceptFormat,
     callback,
     request,
     relationship,
@@ -32,11 +32,11 @@ public enum RequestParam {
     collection,
     conceptScheme,
     responseLanguage,
-    targetConceptScheme,
     rootType,
     relType,
     keyword,
     elementSet,
+    transitive,
     field,
     keywordLanguage,
     offset,

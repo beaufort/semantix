@@ -29,6 +29,7 @@ public enum RequestType {
     GetConceptScheme,
     GetCollections,
     GetCollection,
+    GetCollectionMembers,
     GetTopConcepts,
     GetBroadestConcepts,
     GetConcepts,
@@ -47,11 +48,11 @@ public enum RequestType {
      * possible, otherwise {@code null}
      */
     public static RequestType fromString(String requestString) {
-        if (requestString != null) {
-            for (RequestType requestType: RequestType.values()) {
-                if (requestString.equals(requestType.name())) return requestType;
-            }
+        try {
+            return RequestType.valueOf(requestString);
         }
-        return null;
+        catch (IllegalArgumentException ex) {
+            return null;
+        }
     }
 }

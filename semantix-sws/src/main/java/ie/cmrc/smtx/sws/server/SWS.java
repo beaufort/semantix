@@ -62,7 +62,7 @@ public class SWS extends HttpServlet {
 
     private static final OutputFormat DEFAULT_OUTPUT_FORMAT = OutputFormat.APPLICATION_XML;
     
-    private static final List<OutputFormat> SUPPORTED_OUTPUT_FORMATS = Arrays.asList(OutputFormat.APPLICATION_XML, OutputFormat.APPLICATION_JSON);
+    private static final List<OutputFormat> SUPPORTED_OUTPUT_FORMATS = Arrays.asList(OutputFormat.TEXT_XML, OutputFormat.APPLICATION_XML, OutputFormat.APPLICATION_JSON);
     
     private static final int DEFAULT_MIN_KW_LENGTH = 2;
     
@@ -192,12 +192,12 @@ public class SWS extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OutputFormat outputFormat = DEFAULT_OUTPUT_FORMAT;
-        if (request.getParameterMap().containsKey(RequestParam.outputFormat.name())) {
-            String stringFormat = request.getParameter(RequestParam.outputFormat.name());
+        if (request.getParameterMap().containsKey(RequestParam.acceptFormat.name())) {
+            String stringFormat = request.getParameter(RequestParam.acceptFormat.name());
             outputFormat = OutputFormat.fromString(stringFormat);
                 
             if (outputFormat == null) {
-                this.raiseException(new SWSException(SWSExceptionCode.INVALID_PARAMETER_VALUE, "Parameter '"+RequestParam.outputFormat+"': Invalid value: "+stringFormat, RequestParam.outputFormat.name()), response, DEFAULT_OUTPUT_FORMAT);
+                this.raiseException(new SWSException(SWSExceptionCode.INVALID_PARAMETER_VALUE, "Parameter '"+RequestParam.acceptFormat+"': Invalid value: "+stringFormat, RequestParam.acceptFormat.name()), response, DEFAULT_OUTPUT_FORMAT);
             }
         }
         
@@ -221,6 +221,7 @@ public class SWS extends HttpServlet {
                             case GetConceptScheme: processGetConceptScheme(request, response, outputFormat, callback); break;
                             case GetCollections: processGetCollections(request, response, outputFormat, callback); break;
                             case GetCollection: processGetCollection(request, response, outputFormat, callback); break;
+                            case GetCollectionMembers: processGetCollectionMembers(request, response, outputFormat, callback); break;
                             case GetTopConcepts: processGetExplicitTopConcepts(request, response, outputFormat, callback); break;
                             case GetBroadestConcepts: processGetImplicitTopConcepts(request, response, outputFormat, callback); break;
                             case GetConcepts: processGetConcepts(request, response, outputFormat, callback); break;
@@ -241,7 +242,7 @@ public class SWS extends HttpServlet {
                 }
             }
             else {
-                this.raiseException(new SWSException(SWSExceptionCode.NOT_SUPPORTED, "The requested out put format '"+outputFormat+"': is not supported! Supported output formats are: "+SUPPORTED_OUTPUT_FORMATS.toString(), RequestParam.outputFormat.name()), response, DEFAULT_OUTPUT_FORMAT);
+                this.raiseException(new SWSException(SWSExceptionCode.NOT_SUPPORTED, "The requested output format '"+outputFormat+"': is not supported! Supported output formats are: "+SUPPORTED_OUTPUT_FORMATS.toString(), RequestParam.acceptFormat.name()), response, DEFAULT_OUTPUT_FORMAT);
             }
         }
         
@@ -299,6 +300,19 @@ public class SWS extends HttpServlet {
             //SWS_1_0_Helper swsHelper = new SWS_1_0_Helper(this.persOntConfig);
             long t0 = System.currentTimeMillis();
             String responseDoc  = swsHelper.getCollectionResponse(request, outputFormat);
+            long d = System.currentTimeMillis() - t0;
+            this.returnDocumentAsResponse(responseDoc, response, outputFormat, callback, d);
+        }
+        catch (SWSException e) {
+            this.raiseException(e, response, outputFormat, callback);
+        }
+    }
+
+    protected void processGetCollectionMembers(HttpServletRequest request, HttpServletResponse response, OutputFormat outputFormat, String callback) throws ServletException, IOException {
+        try {
+            //SWS_1_0_Helper swsHelper = new SWS_1_0_Helper(this.persOntConfig);
+            long t0 = System.currentTimeMillis();
+            String responseDoc  = swsHelper.getCollectionMembersResponse(request, outputFormat);
             long d = System.currentTimeMillis() - t0;
             this.returnDocumentAsResponse(responseDoc, response, outputFormat, callback, d);
         }
@@ -443,11 +457,10 @@ public class SWS extends HttpServlet {
     }
 
     private void raiseException (SWSException exception, HttpServletResponse response, OutputFormat outputFormat, String callback) throws ServletException, IOException {
-        if (outputFormat.equals(OutputFormat.APPLICATION_JSON)) {
-            response.setContentType("application/json;charset=UTF-8");
-        }
-        else {
-            response.setContentType("text/xml;charset=UTF-8");
+        switch (outputFormat) {
+            case APPLICATION_JSON: response.setContentType("application/json;charset=UTF-8"); break;
+            case TEXT_XML: response.setContentType("text/xml;charset=UTF-8"); break;
+            default: response.setContentType("application/xml;charset=UTF-8");
         }
         
         
@@ -475,11 +488,10 @@ public class SWS extends HttpServlet {
 
 
     private void returnDocumentAsResponse(String doc, HttpServletResponse response, OutputFormat outputFormat, String callback, long duration) throws ServletException, IOException {
-        if (outputFormat==OutputFormat.APPLICATION_JSON) {
-            response.setContentType("application/json;charset=UTF-8");
-        }
-        else {
-            response.setContentType("text/xml;charset=UTF-8");
+        switch (outputFormat) {
+            case APPLICATION_JSON: response.setContentType("application/json;charset=UTF-8"); break;
+            case TEXT_XML: response.setContentType("text/xml;charset=UTF-8"); break;
+            default: response.setContentType("application/xml;charset=UTF-8");
         }
         
         PrintWriter out = response.getWriter();

@@ -141,7 +141,7 @@ public class SWSExceptionReport {
             QName exceptionQN = new QName("Exception", sws);
             for (SWSException e: this.exceptions) {
                 if (e!=null) {
-                    Element exception = exceptionReport.addElement(exceptionQN).addAttribute("exceptionCode", e.getCode());
+                    Element exception = exceptionReport.addElement(exceptionQN).addAttribute("code", e.getCode());
                     if (e.getLocator()!=null) {
                         if (!e.getLocator().trim().equals("")) {
                             exception.addAttribute("locator", e.getLocator().trim());
@@ -149,7 +149,7 @@ public class SWSExceptionReport {
                     }
 
                     if (e.getMessage()!=null) {
-                        QName messageQN = new QName("ExceptionText", sws);
+                        QName messageQN = new QName("Message", sws);
                         exception.addElement(messageQN).addText(e.getMessage());
                     }
                 }

@@ -31,6 +31,8 @@ import ie.cmrc.smtx.skos.model.hierarchy.HierarchyMethod;
 import ie.cmrc.smtx.skos.model.hierarchy.SKOSConceptNode;
 import ie.cmrc.smtx.skos.model.util.CloseableIterator;
 import ie.cmrc.smtx.skos.index.IndexField;
+import ie.cmrc.smtx.skos.model.SKOSCollectionMember;
+import ie.cmrc.smtx.skos.model.util.EmptyCloseableIterator;
 import ie.cmrc.smtx.sws.config.FilterType;
 import ie.cmrc.smtx.sws.exceptions.SWSException;
 import ie.cmrc.smtx.sws.exceptions.SWSExceptionCode;
@@ -127,7 +129,7 @@ public class SWSHelper {
 
             if (!collectionUri.isEmpty()) {
 
-                SKOSCollection result = thesaurus.getCollection(collectionUri);
+                SKOSCollection result = this.thesaurus.getCollection(collectionUri);
                 return this.resultToString(result, outputFormat, elementSetName, responseLanguage);
             }
             else {
@@ -137,10 +139,36 @@ public class SWSHelper {
         else {
             throw (new SWSException(SWSExceptionCode.MISSING_PARAMETER, RequestParam.collection+" parameter is missing", RequestParam.collection.name()));
         }
-        
     }
 
+    public String getCollectionMembersResponse(HttpServletRequest request, OutputFormat outputFormat) throws SWSException {
+        ElementSetName elementSetName = this.getElementSet(request);
+        String responseLanguage = this.getResponseLanguage(request);
 
+        String transStr = this.getParameterValue(request, RequestParam.transitive);
+        boolean transitive = false;
+        if (transStr!=null && !transStr.isEmpty()) {
+            transitive = Boolean.valueOf(transStr);
+        }
+        
+        String collectionUri = this.getParameterValue(request, RequestParam.collection);
+        if (collectionUri != null) {
+
+            if (!collectionUri.isEmpty()) {
+                SKOSCollection collection  = this.thesaurus.getCollection(collectionUri);
+                CloseableIterator<SKOSCollectionMember> members;
+                if (collection != null) members = transitive? collection.listMembersTransitive(): collection.listMembers();
+                else members = new EmptyCloseableIterator();
+                return this.resultToString(members, outputFormat, elementSetName, responseLanguage);
+            }
+            else {
+                throw (new SWSException(SWSExceptionCode.INVALID_PARAMETER_VALUE, RequestParam.collection+" value is empty", RequestParam.collection.name()));
+            }
+        }
+        else {
+            throw (new SWSException(SWSExceptionCode.MISSING_PARAMETER, RequestParam.collection+" parameter is missing", RequestParam.collection.name()));
+        }
+    }
 
     public String getTopConceptsResponse(HttpServletRequest request, OutputFormat outputFormat) throws SWSException {
 
@@ -275,31 +303,24 @@ public class SWSHelper {
         String conceptUri = this.getParameterValue(request, RequestParam.concept);
         
         if (conceptUri != null) {
-
             if (!conceptUri.isEmpty()) {
+                SKOSSemanticProperty property;
 
                 String relationStr = this.getParameterValue(request, RequestParam.relationship);
-                if (relationStr!=null) {
-                    if (!relationStr.isEmpty()) {
-                        SKOSSemanticProperty property = SKOSSemanticProperty.fromString(relationStr);
-                        if (property != null) {
-                            List<String> conceptSchemeUris = this.getParameterValues(request, RequestParam.conceptScheme);
-                            List<String> collectionUris = this.getParameterValues(request, RequestParam.collection);
+                if (relationStr==null || relationStr.isEmpty()) property = SKOSSemanticProperty.semanticRelation;
+                else  property = SKOSSemanticProperty.fromString(relationStr);
+                        
+                if (property != null) {
+                    List<String> conceptSchemeUris = this.getParameterValues(request, RequestParam.conceptScheme);
+                    List<String> collectionUris = this.getParameterValues(request, RequestParam.collection);
 
-                            CloseableIterator result = this.thesaurus.listRelatedConcepts(conceptUri, property, conceptSchemeUris, collectionUris);
-                            return this.resultToString(result, outputFormat, elementSetName, responseLanguage);
-                        }
-                        else {
-                            throw (new SWSException(SWSExceptionCode.INVALID_PARAMETER_VALUE, "\""+relationStr+"\" is not a valid "+RequestParam.relationship+" value!", RequestParam.relationship.name()));
-                        }
-                    }
-                    else {
-                        throw (new SWSException(SWSExceptionCode.INVALID_PARAMETER_VALUE, RequestParam.relationship+" value is empty!", RequestParam.relationship.name()));
-                    }
+                    CloseableIterator result = this.thesaurus.listRelatedConcepts(conceptUri, property, conceptSchemeUris, collectionUris);
+                    return this.resultToString(result, outputFormat, elementSetName, responseLanguage);
                 }
                 else {
-                    throw (new SWSException(SWSExceptionCode.MISSING_PARAMETER, RequestParam.relationship+" parameter is missing!", RequestParam.relationship.name()));
+                    throw (new SWSException(SWSExceptionCode.INVALID_PARAMETER_VALUE, "\""+relationStr+"\" is not a valid "+RequestParam.relationship+" value!", RequestParam.relationship.name()));
                 }
+                    
             }
             else {
                 throw (new SWSException(SWSExceptionCode.INVALID_PARAMETER_VALUE, RequestParam.concept+" value is empty!", RequestParam.concept.name()));

@@ -23,7 +23,7 @@ package ie.cmrc.smtx.sws.request;
  * @author Yassine Lassoued <y.lassoued@ucc.ie>
  */
 public enum OutputFormat {
-    
+    TEXT_XML("text/xml"),
     APPLICATION_XML("application/xml"),
     APPLICATION_JSON("application/json");
     

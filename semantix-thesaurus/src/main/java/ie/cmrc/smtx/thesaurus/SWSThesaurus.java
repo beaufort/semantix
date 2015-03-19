@@ -219,6 +219,9 @@ public interface SWSThesaurus {
      * Builds the hierarchy of the concepts of this thesaurus using the default
      * {@link ie.cmrc.skos.core.hierarchy.HierarchyMethod}. Please note that this
      * method is <b>not suitable for large thesauri</b>.
+     * @param hierarchyMethod Method to use to build the concept hierarchy.
+     * If {@code null} then the default {@link ie.cmrc.skos.core.hierarchy.HierarchyMethod}
+     * id used.
      * @return List of root concept nodes
      */
     public List<SKOSConceptNode> getConceptHierarchy(HierarchyMethod hierarchyMethod);
