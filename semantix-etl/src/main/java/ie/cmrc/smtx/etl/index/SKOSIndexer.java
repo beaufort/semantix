@@ -19,8 +19,8 @@
 package ie.cmrc.smtx.etl.index;
 
 import ie.cmrc.smtx.skos.model.SKOS;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.NotDirectoryException;
 
 /**
  * A generic interface for SKOS thesaurus indexers. This interface provides one method
@@ -37,13 +37,11 @@ public interface SKOSIndexer {
      * method will create it. If the folder exists and is not empty, then its
      * content will be deleted.
      * @param thesaurus {@link ie.cmrc.skos.core.SKOS} to index
-     * @param indexDir Path of the output file system directory index
+     * @param indexFile Output file index
      * @return {@code true} if indexing was successful, {@code false} otherwise.
-     * @throws NotDirectoryException if the provided {@code indexDir} path is that of
-     * an existing file that is not a directory
-     * @throws IOException If an IO error occurs while connecting to the index directory
+     * @throws IOException If an IO error occurs while connecting to the index file
      * or writing
      */
-    boolean indexSKOSThesaurus(SKOS thesaurus, String indexDir) throws NotDirectoryException, IOException;
+    boolean indexSKOSThesaurus(SKOS thesaurus, File indexFile) throws IOException;
     
 }

@@ -371,8 +371,9 @@ public class ETL {
                 
                 System.out.println("Indexing...");
                 LuceneSKOSConceptIndexer indexer = new LuceneSKOSConceptIndexer(languages, true, transitive);
-
-                result = indexer.indexSKOSThesaurus(thesaurus, indexDir);
+                
+                File indexDirFile = new File(indexDir);
+                result = indexer.indexSKOSThesaurus(thesaurus, indexDirFile);
 
                 System.out.println("  --> Done indexing.");
                 

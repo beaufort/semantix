@@ -1,0 +1,7 @@
+/semantix-skos-model/target/
+/semantix-base/target/
+/semantix-jena/target/
+/semantix-skos-jena/target/
+/semantix-skos-index/target/
+/semantix-lucene/target/
+/semantix-etl/target/

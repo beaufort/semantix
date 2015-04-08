@@ -193,20 +193,19 @@ public final class LuceneSKOSConceptIndexer implements SKOSIndexer {
     /**
      * {@inheritDoc}
      * @param thesaurus {@inheritDoc}
-     * @param indexDir {@inheritDoc}
+     * @param indexDirFile Output index directory
      * @return {@inheritDoc}
      * @throws NotDirectoryException {@inheritDoc}
      * @throws IOException {@inheritDoc}
      */
     @Override
-    public boolean indexSKOSThesaurus(SKOS thesaurus, String indexDir) throws NotDirectoryException, IOException {
+    public boolean indexSKOSThesaurus(SKOS thesaurus, File indexDirFile) throws NotDirectoryException, IOException {
         boolean success = false;
         
         if (thesaurus != null) {
-            if (indexDir!=null && !(indexDir.isEmpty())) {
+            if (indexDirFile!=null) {
                 
                 // Check index directory
-                File indexDirFile = new File(indexDir);
                 if (!indexDirFile.exists()) {
                     // Index directory  does not exist, create it
                     if (verbose) System.out.println("  - Directory \""+indexDirFile.getAbsolutePath()+"\" does not exist. Will create it...");
@@ -275,7 +274,7 @@ public final class LuceneSKOSConceptIndexer implements SKOSIndexer {
                 success = true;
             }
             else {
-                throw new IllegalArgumentException("Index directory path is null or empty");
+                throw new IllegalArgumentException("Index directory is null");
             }
         }
         else {
