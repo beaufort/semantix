@@ -199,9 +199,10 @@ public final class TabularExtractor implements Extractor {
                 System.out.println("No collection members to add.");
             }
             
-            
             // Get relationship table names
+            if (verbose) System.out.println("Reading relationships table list...");
             List<String> relTableNames = this.getRelationshipTables();
+            if (verbose) System.out.println("  --> Done.");
             
             //Add reltionships
             if (verbose) System.out.println("Adding relationships...");
@@ -877,7 +878,7 @@ public final class TabularExtractor implements Extractor {
             }
         }
         else {
-            Logger.getLogger(TabularExtractor.class.getName()).log(Level.WARNING, "No \"{0}\": table found!", tableName);
+            //Logger.getLogger(TabularExtractor.class.getName()).log(Level.WARNING, "No \"{0}\": table found!", tableName);
         }
         return counter;
     }
@@ -948,7 +949,7 @@ public final class TabularExtractor implements Extractor {
             }
         }
         else {
-            Logger.getLogger(TabularExtractor.class.getName()).log(Level.WARNING, "No \"{0}\": table found!", tableName);
+            //Logger.getLogger(TabularExtractor.class.getName()).log(Level.WARNING, "No \"{0}\": table found!", tableName);
         }
         return counter;
     }
