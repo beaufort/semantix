@@ -1224,8 +1224,8 @@ public final class TabularExtractor implements Extractor {
                     if (!collection.hasRelation(SKOSElementProperty.memberTransitive, relatedResource.getURI())) {
                         collection.addRelation(SKOSElementProperty.memberTransitive, relatedResource.getURI());
                         collection.makeRelation(relatedResource.getURI(), SKOSElementProperty.memberOfTransitive);
-                        after+=2;
                     }
+                    after+=2;
                 }
                 relIter.close();
                 //if (incrementalSync) thesaurus.sync();
@@ -1234,9 +1234,12 @@ public final class TabularExtractor implements Extractor {
         infIter.close();
         subthesaurus.close();
         infThesaurus.close();
-        if (verbose) System.out.println("      --> Added "+(after-before)+" inferred membership relationships.");
         
-        return after-before;
+        int result = after-before;
+        
+        if (verbose) System.out.println("      --> Added "+result+" inferred membership relationships.");
+        
+        return result;
     }
     
 }
