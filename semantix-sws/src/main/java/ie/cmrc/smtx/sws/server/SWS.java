@@ -53,6 +53,8 @@ import org.apache.lucene.index.CorruptIndexException;
 public class SWS extends HttpServlet {
 
     private static final String SERVICE_VERSION = "2.1";
+    
+    private static final String SOFTWARE_VERSION = "1.1";
 
     private Boolean initialised = false;
     
@@ -503,7 +505,7 @@ public class SWS extends HttpServlet {
             else {
                 out.println(doc);
                 out.println("\n"
-                        + "<!-- Response returned by SWS "+SERVICE_VERSION+" -->");
+                        + "<!-- Response returned by Semantix "+ SOFTWARE_VERSION + ", SWS "+SERVICE_VERSION+" -->");
                 if (duration>=0) out.println("<!--Request prosessed in "+duration+" milliseconds-->");
             }
         }

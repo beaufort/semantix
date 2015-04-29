@@ -6,8 +6,8 @@
         <init-param>
             <description>Path to the data directory. The data directory must contain a "TDB" directory (triple store) and an "index" directory (indexed data).</description>
             <param-name>DATA</param-name>
-            <!--param-value>/home/marinedebris/mddp/sws</param-value-->
             <param-value>/Users/yassine/ws/mddp_store/sws</param-value>
+            <!--param-value>/home/semantix/mddp_store/sws</param-value-->
             <!--param-value>/Users/yassine/umls/sws</param-value-->
         </init-param>
         <init-param>
