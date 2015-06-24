@@ -38,7 +38,7 @@ public interface SemanticEntity extends Comparable<SemanticEntity>, RDFXMLisable
      *  URL in the format {@code <namespace>#<localName>}, e.g., {@code "http://cmrc.ucc.ie/ont/201403/places.owl#IrishSea"}
      *  URL in the format {@code <namespace>#<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/201403/places.owl#IrishSea/"}
      *  URL in the format {@code <namespace>/<localName>}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea"}
-     *  URL in the format {@code <namespace>/<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea"}
+     *  URL in the format {@code <namespace>/<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea/"}
      *  URN in the format {@code urn:<namespaceIdentifier>:<localName>}, e.g., {@code "urn:ie:ucc:cmrc:places:IrishSea"}</pre>
      * 
      * @return URI of the resource
@@ -53,7 +53,7 @@ public interface SemanticEntity extends Comparable<SemanticEntity>, RDFXMLisable
      *  URL in the format {@code <namespace>#<localName>}, e.g., {@code "http://cmrc.ucc.ie/ont/201403/places.owl#IrishSea"}
      *  URL in the format {@code <namespace>#<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/201403/places.owl#IrishSea/"}
      *  URL in the format {@code <namespace>/<localName>}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea"}
-     *  URL in the format {@code <namespace>/<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea"}
+     *  URL in the format {@code <namespace>/<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea/"}
      *  URN in the format {@code urn:<namespaceIdentifier>:<localName>}, e.g., {@code "urn:ie:ucc:cmrc:places:IrishSea"}</pre>
      */
     String getLocalName();
@@ -66,7 +66,7 @@ public interface SemanticEntity extends Comparable<SemanticEntity>, RDFXMLisable
      *  URL in the format {@code <namespace>#<localName>}, e.g., {@code "http://cmrc.ucc.ie/ont/201403/places.owl#IrishSea"}
      *  URL in the format {@code <namespace>#<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/201403/places.owl#IrishSea/"}
      *  URL in the format {@code <namespace>/<localName>}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea"}
-     *  URL in the format {@code <namespace>/<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea"}
+     *  URL in the format {@code <namespace>/<localName>/}, e.g., {@code "http://cmrc.ucc.ie/ont/concept/current/IrishSea/"}
      *  URN in the format {@code urn:<namespaceIdentifier>:<localName>}, e.g., {@code "urn:ie:ucc:cmrc:places:IrishSea"}</pre>
      */
     String getNameSpace();

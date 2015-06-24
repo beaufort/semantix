@@ -54,7 +54,7 @@ public class JSONSerialiser {
             JSONObject jsonObject = resource.toJSONObject(elementSet, language);
             if (jsonObject != null) rdfResources.add(jsonObject);
         }
-        doc.put("@RDF", rdfResources);
+        doc.put("@graph", rdfResources);
 
         return doc;
     }
@@ -84,7 +84,7 @@ public class JSONSerialiser {
                 if (jsonObject != null) rdfResources.add(jsonObject);
             }
         }
-        doc.put("@RDF", rdfResources);
+        doc.put("@graph", rdfResources);
 
         return doc;
     }
@@ -118,7 +118,7 @@ public class JSONSerialiser {
                 if (jsonObject != null) rdfResources.add(jsonObject);
             }
         }
-        doc.put("@RDF", rdfResources);
+        doc.put("@graph", rdfResources);
 
         return doc;
     }
