@@ -4,15 +4,15 @@
     <parent>
         <artifactId>semantix</artifactId>
         <groupId>ie.cmrc.smtx</groupId>
-        <version>1.1</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>ie.cmrc.smtx</groupId>
     <artifactId>semantix-sws</artifactId>
-    <version>1.1</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
     
-    <name>Semantix SWS - 1.1</name>
+    <name>Semantix SWS - 2.0.0-SNAPSHOT</name>
     <description>Semantic Web Service (SWS), KVP version</description>
     <licenses>
         <license>

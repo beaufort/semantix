@@ -4,13 +4,13 @@
     <parent>
         <groupId>ie.cmrc.smtx</groupId>
         <artifactId>semantix</artifactId>
-        <version>1.1</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
     <groupId>ie.cmrc.smtx</groupId>
     <artifactId>semantix-skos-index</artifactId>
-    <version>1.1</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Semantix SKOS - Index - 1.1</name>
+    <name>Semantix SKOS - Index - 2.0.0-SNAPSHOT</name>
     <description>Defines classes for accessing index SKOS thesauri</description>
     <licenses>
         <license>
