@@ -6,7 +6,8 @@
         <init-param>
             <description>Path to the data directory. The data directory must contain a "TDB" directory (triple store) and an "index" directory (indexed data).</description>
             <param-name>DATA</param-name>
-            <param-value>/Users/yassine/ws/mddp_store/sws</param-value>
+            <param-value>/Users/yassine/Research/UCF/Data/sws/20160425/</param-value>
+            <!--param-value>/Users/yassine/ws/mddp_store/sws</param-value-->
             <!--param-value>/home/semantix/mddp_store/sws</param-value-->
             <!--param-value>/Users/yassine/umls/sws</param-value-->
         </init-param>
@@ -26,7 +27,7 @@
 - broadestConcept: only the broadest concepts are considered as roots,
 - both: both top and broadest concepts are considered as roots.</description>
             <param-name>HIER_METHOD_ROOT_TYPE</param-name>
-            <param-value>topConcepts</param-value>
+            <param-value>both</param-value>
         </init-param>
         <init-param>
             <description>Default relationship type used to build concept hierarchies by the GetConceptHierarchy operation. Supported values are:
@@ -34,7 +35,7 @@
 - directNarrower: For a parent concept, only concepts that are immediately narrower than this one using skos:narrowerTransitive are considered as child concepts,
 - bothNarrower: both narrower and direct narrower relationships are considered in building a concept hierarchy.</description>
             <param-name>HIER_METHOD_REL_TYPE</param-name>
-            <param-value>narrower</param-value>
+            <param-value>directNarrower</param-value>
         </init-param>
         <init-param>
             <description>Default output format. The supported output formats are application/xml and application/json.</description>

@@ -372,19 +372,20 @@ public abstract class AbstractSKOSResource extends AbstractSemanticEntity implem
                         for (Element altLabelElt: altLabelElts) resourceElt.add(altLabelElt);
                         
                         if (esn.compareTo(ElementSetName.EXTENDED) >= 0) {
+                            QName topConceptOfQN = new QName(SKOSElementProperty.topConceptOf.name(), Namespaces.SKOS);
                             
                             CloseableIterator<SKOSResource> topConceptOf = this.listRelations(SKOSElementProperty.topConceptOf);
                             while (topConceptOf.hasNext()) {
                                 SKOSResource cs = topConceptOf.next();
                                 //resourceElt.addElement(inSchemeQN).addAttribute(resourceQN, cs.getURI());
-                                resourceElt.addElement(inSchemeQN).addElement(conceptSchemeQN).addAttribute(aboutQN, cs.getURI());
+                                resourceElt.addElement(topConceptOfQN).addElement(conceptSchemeQN).addAttribute(aboutQN, cs.getURI());
                             }
                             topConceptOf.close();
                             
                             for (SKOSAnnotationProperty property: SKOSAnnotationProperty.values()) {
                                 if (property!=SKOSAnnotationProperty.prefLabel && property!=SKOSAnnotationProperty.altLabel && property!=SKOSAnnotationProperty.definition) {
                                     List<Element> annotationElts = this.getXMLAnnotations(property, language);
-                                    for (Element annotationElt: altLabelElts) resourceElt.add(annotationElt);
+                                    for (Element annotationElt: annotationElts) resourceElt.add(annotationElt);
                                 }
                             }
                             
@@ -479,7 +480,7 @@ public abstract class AbstractSKOSResource extends AbstractSemanticEntity implem
                             if (!topConceptOfArray.isEmpty()) jsonObject.put(SKOSElementProperty.topConceptOf.name(), topConceptOfArray);
                             
                             for (SKOSAnnotationProperty property: SKOSAnnotationProperty.values()) {
-                                if (property!=SKOSAnnotationProperty.prefLabel && property!=SKOSAnnotationProperty.altLabel && property!=SKOSAnnotationProperty.definition) {
+                                if (!property.equals(SKOSAnnotationProperty.prefLabel) && !property.equals(SKOSAnnotationProperty.altLabel) && !property.equals(SKOSAnnotationProperty.definition)) {
                                     JSONArray annotationArray = this.getJSONAnnotations(property, language);
                                     if (!annotationArray.isEmpty()) jsonObject.put(property.name(), annotationArray);
                                 }
